@@ -1,0 +1,22 @@
+PS> winget install --id Vim.Vim
+PS> winget install --id GNU.Emacs
+
+//To run PowerShell scripts 
+PS> Set-ExecutionPolicy Unrestricted
+
+Create file: $HOME\OneDrive\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1
+
+function vim {
+    $vimPath = Get-ChildItem -Path "$env:ProgramFiles\Vim\vim90" -Include vim.exe -Recurse | Select-Object -First 1 -ExpandProperty FullName
+    & $vimPath $args
+}
+
+function emacs {
+    $emacsPath = Get-ChildItem -Path "$env:ProgramFiles\Emacs\emacs-29.1\bin\emacs.exe" -Recurse | Select-Object -First 1 -ExpandProperty FullName
+    & $emacsPath -nw $args
+}
+
+PS> Import-Module profile Microsoft.PowerShell_profile.ps1
+
+//To reload your PowerShell profile without opening a new terminal window, you can use the . (dot sourcing) operator followed by the $PROFILE variable, like this:
+PS> . $PROFILE
